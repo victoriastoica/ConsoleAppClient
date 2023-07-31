@@ -63,8 +63,8 @@ namespace ConsoleAppClient
 
                         count++;
                     }
-  
-                    Thread.Sleep(1000 * 60 * 30);
+
+                    Thread.Sleep(1000);
                     taskSamplesList = GetAllTasks();
                 }
 
@@ -107,7 +107,7 @@ namespace ConsoleAppClient
             HttpResponseMessage response = await client.PutAsJsonAsync($"api/{taskSample.TaskType.ToLower()}/{taskSample.TaskId}", taskSample);
             response.EnsureSuccessStatusCode();
 
-            return response.ReasonPhrase ?? "";
+            return response.Content.ReadAsStringAsync().Result.Replace("\"", "");
         }
     }
 }
